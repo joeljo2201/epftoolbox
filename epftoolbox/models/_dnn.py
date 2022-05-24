@@ -727,7 +727,7 @@ def evaluate_dnn_in_test_dataset(experiment_id, path_datasets_folder=os.path.joi
                 shuffle_train=shuffle_train, data_augmentation=data_augmentation, 
                 calibration_window=calibration_window)
 
-
+    df = pd.DataFrame({'MAE': [], 'SMAE': []})
     # For loop over the recalibration dates
     for date in forecast_dates:
 
@@ -748,13 +748,15 @@ def evaluate_dnn_in_test_dataset(experiment_id, path_datasets_folder=os.path.joi
         # Computing metrics up-to-current-date
         mae = np.mean(MAE(forecast.loc[:date].values.squeeze(), real_values.loc[:date].values)) 
         smape = np.mean(sMAPE(forecast.loc[:date].values.squeeze(), real_values.loc[:date].values)) * 100
-
+        ls = [mae, smape]
+        df.loc[len(df.index)] = ls
         # Pringint information
         print('{} - sMAPE: {:.2f}%  |  MAE: {:.3f}'.format(str(date)[:10], smape, mae))
 
         # Saving forecast
         forecast.to_csv(forecast_file_path)
-
+    df.to_csv("DNNerrorvalues.csv")
+    print("done creating csv")
     return forecast
 
 def format_best_trial(best_trial):
