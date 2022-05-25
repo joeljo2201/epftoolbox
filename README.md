@@ -13,7 +13,7 @@ Website: [https://epftoolbox.readthedocs.io/en/latest/](https://epftoolbox.readt
 ## Getting started
 Download the repository and navigate into the folder
 ```bash
-$ git clone https://github.com/jeslago/epftoolbox.git
+$ git clone https://github.com/joeljo2201/epftoolbox.git
 $ cd epftoolbox
 ```
 Install using pip
